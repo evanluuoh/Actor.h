@@ -1,9 +1,8 @@
-# Actor.h
+#include "GraphObject.h"
 
 #ifndef ACTOR_H_
 #define ACTOR_H_
 
-#include "GraphObject.h"
 class Actor : public GraphObject
 {
 public:
@@ -20,7 +19,6 @@ public:
 #ifndef DIRT_H_
 #define DIRT_H_
 
-#include "Actor.h"
 class Dirt : public Actor
 {
 public:
@@ -34,23 +32,21 @@ public:
 #ifndef PERSON_H_
 #define PERSON_H_
 
-#include "Actor.h"
 class Person : public Actor
 {
 public:
-	Person(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth);
+	Person(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, int health);
 	virtual ~Person();
 	int health();
 private:
 	int m_health;
 };
-#endif PERSON_H_
+#endif //PERSON_H_
 
 
 #ifndef FRACKMAN_H_
 #define FRACKMAN_H_
 
-#include "Actor.h"
 class Frackman : public Person
 {
 public:
