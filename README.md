@@ -1,15 +1,22 @@
+#include "StudentWorld.h"
+#include "GameWorld.h"
 #include "GraphObject.h"
 
 #ifndef ACTOR_H_
 #define ACTOR_H_
 
+class StudentWorld;
+
 class Actor : public GraphObject
 {
 public:
-	Actor(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth);
+	Actor(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world);
 	virtual ~Actor();
 	virtual void doSomething() = 0;
 	virtual void getAnnoyed() = 0;
+	StudentWorld* getWorld();
+private:
+	StudentWorld* m_world;
 };
 // Students:  Add code to this file, Actor.cpp, StudentWorld.h, and StudentWorld.cpp
 
@@ -22,7 +29,7 @@ public:
 class Dirt : public Actor
 {
 public:
-	Dirt(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth);
+	Dirt(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world);
 	virtual ~Dirt();
 };
 
@@ -35,7 +42,7 @@ public:
 class Person : public Actor
 {
 public:
-	Person(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, int health);
+	Person(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world, int health);
 	virtual ~Person();
 	int health();
 private:
@@ -50,7 +57,7 @@ private:
 class Frackman : public Person
 {
 public:
-	Frackman(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, int health);
+	Frackman(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world, int health);
 	virtual ~Frackman();
 	virtual void doSomething();
 	virtual void getAnnoyed();
