@@ -1,0 +1,120 @@
+#include "StudentWorld.h"
+#include "GameWorld.h"
+#include "GraphObject.h"
+
+#ifndef ACTOR_H_
+#define ACTOR_H_
+
+class StudentWorld;
+
+class Actor : public GraphObject
+{
+public:
+	Actor(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world);
+	virtual ~Actor();
+	virtual void doSomething() = 0;
+	virtual void getAnnoyed() = 0;
+	StudentWorld* getWorld();
+	virtual bool isAlive();
+	virtual void makeDead();
+	virtual std::string type() = 0;
+	bool withinRadius(Actor* a, int radius);
+	virtual void loseHealth(int health) = 0;
+private:
+	StudentWorld* m_world;
+	bool m_alive;
+	std::string m_type;
+};
+// Students:  Add code to this file, Actor.cpp, StudentWorld.h, and StudentWorld.cpp
+
+#endif // ACTOR_H_
+
+
+#ifndef DIRT_H_
+#define DIRT_H_
+
+class Dirt : public Actor
+{
+public:
+	Dirt(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world);
+	virtual ~Dirt();
+	void doSomething();
+	void getAnnoyed();
+	virtual std::string type();
+	virtual void loseHealth(int health);
+};
+
+#endif // DIRT_H_
+
+
+#ifndef PERSON_H_
+#define PERSON_H_
+
+class Person : public Actor
+{
+public:
+	Person(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world, int health);
+	virtual ~Person();
+	int health();
+	void loseHealth(int health);
+	virtual std::string type();
+private:
+	int m_health;
+};
+#endif //PERSON_H_
+
+
+#ifndef FRACKMAN_H_
+#define FRACKMAN_H_
+
+class Frackman : public Person
+{
+public:
+	Frackman(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world, int health);
+	virtual ~Frackman();
+	virtual void doSomething();
+	virtual void getAnnoyed();
+private:
+	int countWater;
+	int countSonar;
+	int countGold;
+};
+#endif PERSON_H_
+
+
+#ifndef BOULDER_H_
+#define BOULDER_H_
+
+class Boulder : public Actor
+{
+public:
+	Boulder(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world);
+	virtual ~Boulder();
+	virtual void doSomething();
+	virtual void getAnnoyed();
+	std::string status();
+	virtual std::string type();
+	virtual void loseHealth(int health);
+private:
+	std::string m_status;
+	int countWaiting;
+};
+#endif //BOULDER_H_
+
+
+#ifndef SQUIRT_H_
+#define SQUIRT_H_
+
+class Squirt : public Actor
+{
+public:
+	Squirt(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world);
+	virtual ~Squirt();
+	virtual void doSomething();
+	virtual void getAnnoyed();
+	virtual std::string type();
+	virtual void loseHealth(int health);
+private:
+	int m_health;
+};
+#endif //SQUIRT_H_
