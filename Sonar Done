@@ -1,0 +1,212 @@
+#include "StudentWorld.h"
+#include "GameWorld.h"
+#include "GraphObject.h"
+
+#ifndef ACTOR_H_
+#define ACTOR_H_
+
+class StudentWorld;
+
+class Actor : public GraphObject
+{
+public:
+	Actor(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world);
+	virtual ~Actor();
+	virtual void doSomething() = 0;
+	virtual void getAnnoyed() = 0;
+	StudentWorld* getWorld();
+	virtual bool isAlive();
+	virtual void makeDead();
+	virtual std::string type() = 0;
+	bool withinRadius(Actor* a, int radius);
+	virtual void loseHealth(int health) = 0;
+	virtual bool isCollectible();
+private:
+	StudentWorld* m_world;
+	bool m_alive;
+	std::string m_type;
+};
+
+#endif // ACTOR_H_
+
+//////////////////////////////////////////////////////////////////////
+
+#ifndef DIRT_H_
+#define DIRT_H_
+
+class Dirt : public Actor
+{
+public:
+	Dirt(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world);
+	virtual ~Dirt();
+	void doSomething();
+	void getAnnoyed();
+	virtual std::string type();
+	virtual void loseHealth(int health);
+};
+
+#endif // DIRT_H_
+
+//////////////////////////////////////////////////////////////////////
+
+#ifndef PERSON_H_
+#define PERSON_H_
+
+class Person : public Actor
+{
+public:
+	Person(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world, int health);
+	virtual ~Person();
+	int health();
+	void loseHealth(int health);
+private:
+	int m_health;
+};
+#endif //PERSON_H_
+
+//////////////////////////////////////////////////////////////////////
+
+#ifndef FRACKMAN_H_
+#define FRACKMAN_H_
+
+class Frackman : public Person
+{
+public:
+	Frackman(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world, int health);
+	virtual ~Frackman();
+	virtual void doSomething();
+	virtual void getAnnoyed();
+	virtual std::string type();
+};
+#endif //PERSON_H_
+
+//////////////////////////////////////////////////////////////////////
+
+#ifndef BOULDER_H_
+#define BOULDER_H_
+
+class Boulder : public Actor
+{
+public:
+	Boulder(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world);
+	virtual ~Boulder();
+	virtual void doSomething();
+	virtual void getAnnoyed();
+	std::string status();
+	virtual std::string type();
+	virtual void loseHealth(int health);
+private:
+	std::string m_status;
+	int countWaiting;
+};
+#endif //BOULDER_H_
+
+//////////////////////////////////////////////////////////////////////
+
+#ifndef SQUIRT_H_
+#define SQUIRT_H_
+
+class Squirt : public Actor
+{
+public:
+	Squirt(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world);
+	virtual ~Squirt();
+	virtual void doSomething();
+	virtual void getAnnoyed();
+	virtual std::string type();
+	virtual void loseHealth(int health);
+private:
+	int m_health;
+};
+#endif //SQUIRT_H_
+
+//////////////////////////////////////////////////////////////////////
+
+#ifndef GOODIE_H_
+#define GOODIE_H_
+
+class Goodie : public Actor
+{
+public:
+	Goodie(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world);
+	virtual ~Goodie();
+	virtual bool isCollectible();
+};
+#endif //GOODIE_H_
+
+//////////////////////////////////////////////////////////////////////
+
+#ifndef BARREL_H_
+#define BARREL_H_
+
+class Barrel : public Goodie
+{
+public:
+	Barrel(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world);
+	virtual ~Barrel();
+	virtual void doSomething();
+	virtual void getAnnoyed();
+	virtual void loseHealth(int health);
+	virtual std::string type();
+};
+#endif //BARREL_H_
+
+//////////////////////////////////////////////////////////////////////
+
+#ifndef NUGGET_H_
+#define NUGGET_H_
+
+class Nugget : public Goodie
+{
+public:
+	Nugget(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world);
+	virtual ~Nugget();
+	virtual void doSomething();
+	virtual void getAnnoyed();
+	virtual void loseHealth(int health);
+	virtual std::string type();
+	bool isDiscovered();
+	void setDiscovered();
+private:
+	bool m_discovered;
+	int m_lifetime;
+};
+#endif //NUGGET_H_
+
+//////////////////////////////////////////////////////////////////////
+
+#ifndef SONAR_H_
+#define SONAR_H_
+
+class Sonar : public Goodie
+{
+public:
+	Sonar(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world);
+	virtual ~Sonar();
+	virtual void doSomething();
+	virtual void getAnnoyed();
+	virtual void loseHealth(int health);
+	virtual std::string type();
+private:
+	int m_lifetime;
+};
+#endif //SONAR_H_
+
+//////////////////////////////////////////////////////////////////////
+
+#ifndef POOL_H_
+#define POOL_H_
+
+class Pool : public Goodie
+{
+public:
+	Pool(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* world);
+	virtual ~Pool();
+	virtual void doSomething();
+	virtual void getAnnoyed();
+	virtual void loseHealth(int health);
+	virtual std::string type();
+private:
+	int m_lifetime;
+};
+#endif //POOL_H_
